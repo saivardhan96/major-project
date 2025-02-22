@@ -1,6 +1,7 @@
 package com.example.majorpro1.controller;
 
 
+import com.example.majorpro1.entity.DetUser;
 import com.example.majorpro1.entity.UserEntity;
 import com.example.majorpro1.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,20 @@ public class PublicController {
         // register new user
         try{
             return new ResponseEntity<>(userService.saveUser(user) , HttpStatus.CREATED);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+
+
+
+    @PostMapping("/new-detUser")
+    public ResponseEntity<DetUser> newDetUser(@RequestBody DetUser detUser){
+        try{
+            return new ResponseEntity<>(userService.saveDetUser(detUser) , HttpStatus.CREATED);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
