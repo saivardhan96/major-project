@@ -7,7 +7,6 @@ import com.example.majorpro1.repository.QuestionRepo;
 import com.example.majorpro1.repository.UserRepo;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -67,6 +66,4 @@ public class QuestionService {
     private PostDTO convertEntityToDTO(QuestionEntity question){
         return new PostDTO(question.getCompany(), question.getSubject(), question.getQuestion());
     }
-
-
 }
