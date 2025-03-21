@@ -48,11 +48,11 @@ public class QuestionService {
         if(allPosts==null) return questionRepo.findAllByTagIgnoreCase(tag);
         return allPosts.stream().filter( x -> Objects.equals(x.getTag(),tag)).toList();
     }
-    public void saveQuestion(QuestionEntity question, String username){
+    public UserEntity saveQuestion(QuestionEntity question, String username){
         Optional<UserEntity> entity =  userRepo.findById(username);
         UserEntity userInDb = entity.get();
         userInDb.getQuestions().add(questionRepo.save(question));
-        userRepo.save(userInDb);
+        return userRepo.save(userInDb);
     }
 
     public List<PostDTO> getAllPosts(){

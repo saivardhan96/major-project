@@ -3,7 +3,10 @@ package com.example.majorpro1.controller;
 
 import com.example.majorpro1.dto.PostDTO;
 import com.example.majorpro1.entity.QuestionEntity;
+import com.example.majorpro1.entity.UserEntity;
 import com.example.majorpro1.service.QuestionService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,11 +24,12 @@ public class QuestionController {
         this.questionService = questionService;
     }
     @PostMapping("/new-post/save")
-    public void postQuestion(@RequestBody QuestionEntity question){
+    @ResponseBody
+    public ResponseEntity<UserEntity> postQuestion(@RequestBody QuestionEntity question){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         System.out.println("username" + username);
-        questionService.saveQuestion(question,username);
+        return new ResponseEntity<>(questionService.saveQuestion(question,username), HttpStatus.CREATED);
     }
 
     @GetMapping("/new-post")
