@@ -3,18 +3,17 @@ package com.example.majorpro1.controller;
 
 import com.example.majorpro1.entity.QuestionEntity;
 import com.example.majorpro1.entity.UserEntity;
-import com.example.majorpro1.repository.QuestionRepo;
 import com.example.majorpro1.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/student")
 public class UserController {
 
@@ -26,19 +25,21 @@ public class UserController {
     *
     */
     private final UserService userService;
-    private final QuestionRepo questionRepo;
 
-    public UserController(UserService userService, QuestionRepo questionRepo) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.questionRepo = questionRepo;
     }
 
     @GetMapping("/my-posts")
+    @ResponseBody
     public List<QuestionEntity> getPosts(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("username from ");
         String username = authentication.getName();
         return userService.getUserPosts(username);
     }
+
+
 
     @PutMapping("/update")
     public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user){

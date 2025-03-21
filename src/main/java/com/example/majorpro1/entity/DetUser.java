@@ -26,7 +26,7 @@ public class DetUser {
     private String branch;
     private String email;
     private String phoneNumber;
-    @DBRef
-    private List<DetPost> posts = new ArrayList<>();
+//    @DBRef
+//    private List<DetPost> posts = new ArrayList<>();
 
 }

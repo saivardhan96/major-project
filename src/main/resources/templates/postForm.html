@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Interview Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(to bottom right, #fbc2eb, #a6c1ee);
+        }
+
+        .container {
+            width: 70%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+
+
+        label {
+            font-weight: bold;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        .add-question-btn {
+            cursor: pointer;
+            padding: 10px 18px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            transition: background-color 0.3s, transform 0.3s ease;
+            margin-top: 10px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .add-question-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .add-question-btn:active {
+            background-color: #004085;
+        }
+
+        .add-question-btn:focus {
+            outline: none;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+
+        .submit-btn:active {
+            background-color: #1e7e34;
+        }
+
+        .submit-btn:focus {
+            outline: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Custom Styling for Section Headers */
+        .questions {
+            margin-bottom: 20px;
+        }
+
+        .questions label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #444;
+        }
+
+        .resources input,
+        .resources select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        /* Focus effects on buttons */
+        .add-question-btn,
+        .submit-btn {
+            transition: transform 0.2s, background-color 0.3s ease;
+        }
+
+        .resources label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .resources input {
+            background-color: #f9f9f9;
+        }
+
+        .resources input:focus {
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Dynamic Interview Form</h2>
+
+    <form action="/posts/new-post/save" method="post">
+
+        <div class="form-group">
+            <label for="company">Company</label>
+            <textarea id="company" name="company"
+                      placeholder="Enter the company's name or description..."></textarea>
+        </div>
+
+        <!-- OA Questions Section -->
+        <div class="form-group" id="oa-questions-section">
+            <label for="oa-questions">OA Questions</label>
+            <div class="questions" id="os-questions">
+                <label>OS</label>
+                <textarea id="os" name="os"></textarea>
+                <button type="button" class="add-question-btn" onclick="addQuestion('os-questions')">+ Add another
+                    OS question</button>
+            </div>
+
+            <div class="questions" id="cn-questions">
+                <label>CN</label>
+                <textarea id="cn" name="cn"></textarea>
+                <button type="button" class="add-question-btn" onclick="addQuestion('cn-questions')">+ Add another
+                    CN question</button>
+            </div>
+
+            <div class="questions" id="dbms-questions">
+                <label>DBMS</label>
+                <textarea id="dbms" name="dbms"></textarea>
+                <button type="button" class="add-question-btn" onclick="addQuestion('dbms-questions')">+ Add another
+                    DBMS question</button>
+            </div>
+        </div>
+
+        <!-- OA Result Section -->
+        <div class="form-group" id="oa-result-section">
+            <label for="oa-result">OA Result</label>
+            <select id="oa-result" name="oa-result" onchange="handleOAResultChange()">
+                <option value="">Select Result</option>
+                <option value="Passed">Cleared</option>
+                <option value="Failed">Not Cleared</option>
+            </select>
+        </div>
+
+        <!-- Interview Questions Section (Initially Hidden) -->
+        <div class="form-group hidden" id="interview-questions-section">
+            <label for="interview-questions">Interview Questions</label>
+            <div class="questions" id="tr-questions">
+                <label>TR</label>
+                <textarea id="tr" name="tr"></textarea>
+                <button type="button" class="add-question-btn" onclick="addQuestion('tr-questions')">+ Add another
+                    TR question</button>
+            </div>
+
+            <div class="questions" id="hr-questions">
+                <label>HR</label>
+                <textarea id="hr" name="hr"></textarea>
+                <button type="button" class="add-question-btn" onclick="addQuestion('hr-questions')">+ Add another
+                    HR question</button>
+            </div>
+        </div>
+
+        <!-- Resources -->
+        <div class="form-group resources">
+            <label for="gfg">GFG</label>
+            <input type="url" id="gfg" name="gfg" value="https://geeksforgeeks.com">
+
+            <label for="striver">Striver</label>
+            <input type="url" id="striver" name="striver" value="www.takeuforward.com">
+        </div>
+
+        <!-- Suggestions -->
+        <div class="form-group">
+            <label for="suggestions">Suggestions</label>
+            <textarea id="suggestions" name="suggestions" placeholder="Add Valuable suggestion."></textarea>
+        </div>
+
+        <!-- Overall difficulty level -->
+        <div class="form-group">
+            <label for="difficulty">Overall difficulty level</label>
+            <input type="number" id="difficulty" name="difficulty" value="3" min="1" max="5">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</div>
+
+<script>
+    function handleOAResultChange() {
+        const oaResult = document.getElementById("oa-result").value;
+        const interviewSection = document.getElementById("interview-questions-section");
+
+        if (oaResult === "Passed") {
+            document.getElementById("oa-result-section").classList.remove("hidden");
+            interviewSection.classList.remove("hidden");
+        } else {
+            document.getElementById("oa-result-section").classList.remove("hidden");
+            interviewSection.classList.add("hidden");
+        }
+    }
+
+    function addQuestion(sectionId) {
+        const newQuestion = document.createElement("textarea");
+        newQuestion.setAttribute("name", sectionId + "-new");
+        newQuestion.setAttribute("placeholder", "Enter new " + sectionId.split('-')[0].toUpperCase() + " question...");
+        newQuestion.style.marginTop = "5px";
+        newQuestion.style.height = "100px";
+        document.getElementById(sectionId).appendChild(newQuestion);
+    }
+</script>
+
+</body>
+
+</html>

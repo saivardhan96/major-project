@@ -6,23 +6,32 @@ import com.example.majorpro1.entity.QuestionEntity;
 import com.example.majorpro1.service.QuestionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("posts")
+@Controller
+@RequestMapping("/posts")
 public class QuestionController {
     private final QuestionService questionService;
 
     public QuestionController(QuestionService questionService) {
         this.questionService = questionService;
     }
-    @PostMapping("/new-post")
+    @PostMapping("/new-post/save")
     public void postQuestion(@RequestBody QuestionEntity question){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        System.out.println("username" + username);
         questionService.saveQuestion(question,username);
+    }
+
+    @GetMapping("/new-post")
+    public String newPostForm(Model model){
+
+        return "postForm";
     }
 
     @GetMapping("/show")

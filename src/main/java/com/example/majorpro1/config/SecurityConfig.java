@@ -31,10 +31,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.csrf( customizer -> customizer.disable());
-        return http.authorizeHttpRequests(request -> request
-                .requestMatchers("/public/***").permitAll()
-                .anyRequest().authenticated())
+        return http.formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll().defaultSuccessUrl("/home", true)
+                        )
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/register-user", "/home", "static/css/**").permitAll()
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();

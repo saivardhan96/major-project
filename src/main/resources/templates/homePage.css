@@ -1,0 +1,90 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+}
+
+/* Landing page background */
+.landing-page {
+    position: relative;
+    height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1549484773-3cf6824e79f3'); /* Replace with your preferred image */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #ff7f50; /* Coral color */
+    text-transform: uppercase;
+}
+
+.header p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+/* Button Styles */
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.signup-btn {
+    background-color: #ff7f50;
+    color: #fff;
+}
+
+.login-btn {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn:hover {
+    background-color: #333;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #ddd;
+}
